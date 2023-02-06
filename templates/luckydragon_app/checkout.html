@@ -1,0 +1,84 @@
+{% extends 'luckydragon_app/base.html' %}
+
+{% block title %}
+    <title>Register</title>
+{% endblock %}
+    {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    <td class="actions" data-th="">
+        <a href="{% url 'cart' %}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Return to Cart </a>
+    </td>
+    {% load i18n %}
+
+    {% block head %}
+    {{ wizard.form.media }}
+    {% endblock %}
+
+    <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+    <form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ wizard.management_form }}
+    {% if wizard.form.forms %}
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
+            {{ form }}
+        {% endfor %}
+    {% else %}
+        {{ wizard.form }}
+    {% endif %}
+    </table>
+    {% if wizard.steps.prev %}
+    <button name="wizard_goto_step" type="submit" class="btn btn-primary" value="{{ wizard.steps.prev }}" formnovalidate><i class="fa fa-angle-left"></i> {% trans "Previous" %}</button>
+    {% endif %}
+    {% if wizard.steps.current == wizard.steps.last %}
+    <input type="submit" value="Submit" class="btn btn-primary" />
+    {% else %}
+    <input type="submit" value="Next" class="btn btn-primary" />
+    {% endif %}
+    </form>
+    <div>
+        <p>Delivery Fee:</p>{{ delivery_fee }}
+        <p>Total: </p>{{ total }}
+    </div>
+</body>
+<script>
+    function hide() {
+        let labels = document.getElementsByTagName('label')
+        if (document.getElementById('id_payment-order_payment_type').options[document.getElementById('id_payment-order_payment_type').selectedIndex].value == 'Cash') {
+        let labels = document.getElementsByTagName('label')
+        for (let i = 0; i < labels.length; i++) {
+            let label = labels[i]
+            if (label.htmlFor === 'id_payment-card_type' 
+                || label.htmlFor === 'id_payment-card_number'
+                || label.htmlFor === 'id_payment-card_exp_date'
+                || label.htmlFor === 'id_payment-card_cvv'
+                || label.htmlFor === 'id_payment-card_billing_zipcode') {
+                labels[i].style.display = 'none'
+                document.getElementById(label.htmlFor).style.display = 'none'
+            }
+        }
+        } else {
+            for (let i = 0; i < labels.length; i++) {
+                let label = labels[i]
+                if (label.htmlFor === 'id_payment-card_type' 
+                || label.htmlFor === 'id_payment-card_number'
+                || label.htmlFor === 'id_payment-card_exp_date'
+                || label.htmlFor === 'id_payment-card_cvv'
+                || label.htmlFor === 'id_payment-card_billing_zipcode') {
+                    labels[i].style.display = ''
+                    document.getElementById(label.htmlFor).style.display = ''
+                }
+            }
+        }
+    }
+    
+</script>
+{% endblock %}
+</html>

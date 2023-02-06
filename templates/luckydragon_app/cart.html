@@ -1,0 +1,182 @@
+{% extends 'luckydragon_app/base.html' %}
+
+{% load static %}
+{% block extraheader %}
+    <script src="{% static 'js/cart.js' %}" type='text/javascript'></script>
+{% endblock %}
+
+{% block title %}
+	<title>Cart</title>
+{% endblock %}
+
+{% block content %}
+    <header id="site-header">
+        <div class="container">
+            <h1>Shopping Cart (<span>{{ quantity }}</span> items)</h1>
+    </div>
+	</header>
+    
+    <form method="POST", id="cart">
+        {% csrf_token %}
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <div class="container">
+	        <table id="cart" class="table table-hover table-condensed">
+    			<thead>
+					<tr>
+						<th style="width:50%">Food Item</th>
+						<th style="width:10%">Price</th>
+						<th style="width:8%">Quantity</th>
+						<th style="width:22%" class="text-center">Subtotal</th>
+						<th style="width:10%"></th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for key, vals in cart.items %}
+					<tr>
+						<td data-th="Product">
+							<div class="row">
+									{% if vals.food_image %}
+										<div class="col-sm-2 hidden-xs">
+											<a href="{% url 'dish_display' vals.food_id  %}">
+												{% load static %}
+												<img src="{% static 'images/food/' %}{{vals.food_image}}.jpg" width="100px" height="100px" class="rounded"/>
+											</a>
+										</div>
+										<div class="col-sm-10">
+											<h4 class="nomargin">
+												<a href="{% url 'dish_display' vals.food_id  %}" class="text-danger">
+													{{vals.food_name}}
+												</a>
+											</h4>
+									{% else %}
+											<div class="col-sm-2 hidden-xs"></div>
+											<h4 class="nomargin" style="padding: 0 100px 60px 10px">
+												<a href="{% url 'dish_display' vals.food_id  %}" class="text-danger" padding="100px">
+													{{vals.food_name}}
+												</a>
+											</h4>
+									{% endif %}
+                                    	{% if 'options_string' in vals %}
+											<p>Options: <span>{{vals.options_string}}</span></p>
+                                    	{% endif %}
+										{% if 'special_instruction' in vals and vals.special_instruction != ''%}
+											<p>Special Instructions: <span>{{vals.special_instruction}}</span></p>
+                                    	{% endif %}
+										</div>
+							</div>
+						</td>
+						<td data-th="Price">$<span>{{vals.unit_price}}</span></td>
+						<td data-th="Quantity">
+							<button class="btn btn-danger btn-sm" name ="subtract" value ="{{key}}" onclick="deleteRequired()"> - </button>
+                        	<span>{{vals.quantity}}</span>
+                            <button class="btn btn-danger btn-sm" name ="add" value ="{{key}}" onclick="deleteRequired()"> + </button>
+						</td>
+						<td data-th="Subtotal" class="text-center">{{vals.subtotal}}</td>
+						<td class="actions" data-th="">
+                            <button class="btn btn-danger btn-sm" name ="delete" value ="{{key}}" onclick="deleteRequired()"><i class="fa fa-trash-o"></i></button>
+                        </td>
+					</tr>
+                    {% endfor %}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td data-th="Price"></td> 
+						<td data-th="Quantity"></td> 
+						<td data-th="Subtotal"> 
+							<table>
+								<tr>
+									<td class="text-left">
+										<strong>Subtotal:</strong>
+									</td>
+									<td class="text-left">
+										${{subtotal}}
+									</td>
+								</tr>
+								<tr>
+									<td class="text-left">
+										<strong>Tax (6%):</strong>
+									</td>
+									<td class="text-left">
+										${{tax}}
+									</td>
+								</tr>
+								<tr>
+									<td class="text-left">
+										<strong>Estimated Total:</strong>
+									</td>
+									<td class="text-left">
+										${{total}}
+									</td>
+								</tr>
+								<tr style="display:none" id='total-after-tip'>
+									<td class="text-left">
+										<strong>New Total:</strong>
+									</td>
+									<td class="text-left" id='total-after-tip-value'>
+									</td>
+								</tr>
+							</table>
+							<br>
+							<p class="text-left"><strong>Tip:</strong></p>
+							<input type="number" name="tip" id="tip" step="0.01" min="0" onchange="displayTotalAfterTip(this.value, '{{ total }}')">
+							<div id="tip-suggestions">
+								<table id="suggestions">
+									<tr>
+										<td>
+											<button type="button" class="btn btn-info" name="10%" onclick="displayTotalAfterTip('{{ tip_ten }}', '{{ total }}')">
+												10%<small>(${{ tip_ten }})</small>
+											</button>
+										</td>
+										<td>
+											<button type="button" class="btn btn-info" name="15%" onclick="displayTotalAfterTip('{{ tip_fifteen }}', '{{ total }}')">
+												15%<small>(${{ tip_fifteen }})</small>
+											</button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<button type="button" class="btn btn-info" name="20%" onclick="displayTotalAfterTip('{{ tip_twenty }}', '{{ total }}')">
+												20%<small>(${{ tip_twenty }})</small>
+											</button>
+										</td>
+										<td>
+											<button type="button" class="btn btn-info" name="None" onclick="displayTotalAfterTip(0, '{{ total }}')">
+												None
+											</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+					 	</td>
+					</tr>
+					<tr>
+						<td data-th="Product">
+							<div class="row">
+								<div class="col-sm-2 hidden-xs">
+									<a href="\menu" class="btn btn-warning">
+										<i class="fa fa-angle-left"></i>
+										Continue Shopping
+									</a>
+								</div>
+							</div>
+						</td>
+						<td></td>
+						<td></td>
+						<td>
+							<input id="confirmation" type="checkbox">
+							<label for="confirmation">I confirm the order is correct.</label>
+						</td>
+						<td></td>
+						<td class="actions" data-th="">
+							<button id='checkout' class="btn btn-success btn-block" name="checkout" value="checkout" onclick="addRequired()">
+								<i class="fa fa-angle-right"></i>
+								Checkout
+							</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+        </div>
+    </form>   
+{% endblock %}

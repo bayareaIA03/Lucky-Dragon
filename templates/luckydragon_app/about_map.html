@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script>
+      function initMap() {
+        // The location of restaurant
+        const lucky_dragon = { lat: 33.86209776918847, lng: -84.59738277607032};
+        const map = new google.maps.Map(document.getElementById("map"),{
+          zoom: 17,
+          center: lucky_dragon,
+        });
+        const marker = new google.maps.Marker({
+          position: lucky_dragon,
+          map: map,
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxnaxzRfR4iak8hX1Czdm8UrSCeGwP8eE&callback=initMap"
+      async
+    ></script>
+  </body>
+</html>

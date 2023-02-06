@@ -1,0 +1,121 @@
+{% extends 'luckydragon_app/base.html' %}
+
+{% load static %}
+{% block extraheader %}
+    <link rel = "stylesheet"  type="text/css" href = "{% static 'css/about.css' %}">
+    <script src="{% static 'js/about.js' %}" type='text/javascript'></script>
+{% endblock %}
+
+{% block title %}
+	<title>About</title>
+{% endblock %}
+
+{% block content %}
+<img class = "hero-image" alt= "image of restaurant" src="{% static 'images/building/Exterior.jpg' %}">
+<div class="container">
+    <div class="row row-cols-2">
+        <div class="col-sm-7">
+            <div class="about-info">
+                <h1 class="about-header">
+                    About Us!
+                </h1>
+                <div class="about-Describe">
+                    Lucky Dragon Restaurant offers delicious tasting Chinese & Asian cuisine in Marietta, GA. Lucky Dragon's convenient location and affordable
+                    prices make our restaurant a natural choice for dine-in or take-out meals in the Marietta community. Our restaurant is known for its variety in taste
+                    and high quality fresh ingredients. Come and experience our friendly atmosphere and excellent service.
+                </div>
+                <div class="about-Hour">
+                    <h3>Hours of Operation</h3>
+                    <table>
+                        <tr>
+                            <td>Sunday</td>
+                            <td>12PM - 9:30PM</td>
+                        </tr>
+                        <tr>
+                            <td>Monday</td>
+                            <td>11AM - 9:30PM</td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td><b>Closed</b></td>
+                        </tr>
+                        <tr>
+                            <td>Wednesday</td>
+                            <td>11AM - 9:30PM</td>
+                        </tr>
+                        <tr>
+                            <td>Thursday</td>
+                            <td>11AM - 9:30PM</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td>11AM - 10PM</td>
+                        </tr>
+                        <tr>
+                            <td>Saturday</td>
+                            <td>12PM - 10PM</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="about-delivery">
+                    <h5>Estimated delivery time: <small>45 — 55min</small></h5><br>
+                    <h5>Delivery Policy</h5>
+                    <ul>
+                        <li>Delivery Fees:</li>
+                            <ul>
+                                <li>For delivery distance of 5 miles or less, the order minimum is $20 (subtotal) and the delivery fee is $3.</li>
+                                <li>For delivery distance between 5 to 6 miles, the order minimum is $35 (subtotal) and the delivery fee is $5.</li>
+                                <li>For delivery distance greater than 6 miles, please consider ordering via UberEats.</li>
+                            </ul>
+                        <li>If the delivery location is an apartment, a public or a commercial site, please include the specifics in the delivery instruction.
+                            (e.g. apartment number, instruction for entrance if there is a gate, or pick-up instruction for hospital.)
+                        </li>
+                    </ul>
+                </div>
+                <div class="about-payments">
+                    <h6>Payment Options: </h6>
+                    <div id="photo">
+                        <span >
+                            <img src="https://www.mariettaluckydragon.com/web/default3.0/img/payment-icons/icon-visa.png" width="49" height="29" alt="We Accept Visa Card">
+                        </span>
+                    </div>
+                    <div id="photo">
+                        <img src="https://www.mariettaluckydragon.com/web/default3.0/img/payment-icons/icon-mastercard.png" width="49" height="29" alt="We Accept Mastercard">
+                    </div>
+                    <div id="photo">
+                        <img src="https://www.mariettaluckydragon.com/web/default3.0/img/payment-icons/icon-amex.png" width="49" height="29" alt="We Accept American Express">
+                    </div>
+                    <div id="photo">
+                        <img src="https://www.mariettaluckydragon.com/web/default3.0/img/payment-icons/icon-discover.png" width="49" height="29" alt="We Accept Discover Card">
+                    </div>
+                    <div id="photo">
+                        <img src="https://www.mariettaluckydragon.com/web/default3.0/img/payment-icons/icon-cash.png" width="49" height="29" alt="We Accept Cash">
+                    </div>
+                 </div>
+            </div>
+        </div>
+        <div class="col-sm-5 location">
+            <div id="map"></div>
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxnaxzRfR4iak8hX1Czdm8UrSCeGwP8eE&callback=initMap"
+                async
+            ></script>
+            <div class="about-address">
+                <strong>
+                    Lucky Dragon - Marietta
+                </strong>
+                <div>
+                    3750 Austell Rd SW<br>
+                    Marietta, GA 30008
+                </div><br>
+                <div>
+                    (770) 948-7161<br>
+                    (770) 948-9428
+                </div><br>
+                <p>luckydragonmarietta@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

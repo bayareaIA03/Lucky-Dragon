@@ -1,0 +1,115 @@
+{% extends 'luckydragon_app/base.html' %}
+
+{% load static %}
+{% block extraheader %}
+    <link rel = "stylesheet"  type="text/css" href = "{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>Lucky Dragon</title>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="jumbo container-fluid d-flex justify-content-start  align-items-center align-items-md-start align-items-lg-start align-items-xl-start flex-column ">
+            <div class="title-img-background"></div>
+            <!-- TODO: over the Title.svg (make it a separate div and add transparent background to make text show) on top of static/images/building/Indoor2.jpg -->
+            <img src="../../static/css/assets/Title.svg" alt="Lucky Dragon" class="title-img">
+            <p class="blurb">Serving Asian Cuisine since 1970.</p>
+            <a href="{% url 'menu' %}" class="btn btn-primary order-online">Order Online!</a>
+        </div>
+    </div>
+    <div class="sep">
+    </div>
+    <div class = " cards-back container-fluid d-flex flex-column justify-content-center align-items-center flex-lg-row flex-xl-row ">
+        <div class = " container-fluid d-flex justify-content-center align-items-center flex-column flex-lg-row flex-xl-row justify-content-lg-start justify-content-xl-start align-items-lg-start">
+            <div class = "split">
+                <a href="/">
+                    <div class="specials first">
+                        <h1>House Special</h1>
+                        <img src="../../static/images/food/triple-mongolian.jpg"/>
+                    </div>
+                </a>
+                <a href="/">
+                <div class="specials second">
+                    <h1>Thai</h1>
+                     <img src="../../static/images/food/pad-thai.jpg"/>
+                </div>
+                </a>
+            </div>
+            <div class = "split">
+                <a href="/">
+                    <div class="specials third">
+                        <h1>Chinese</h1>
+                         <img src="../../static/images/food/general-tso-chicken.jpg"/>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="specials forth">
+                        <h1>Japanese</h1>
+                         <img src="../../static/images/food/grilled-chicken-teriyaki.jpg"/>
+                    </div>
+                </a>
+            </div>
+            <div class = " d-flex container  justify-content-center align-items-center flex-column justify-content-lg-center align-items-lg-center">
+                <div class = 'cont-hours'>
+                  <p>Hours</p>
+                    <p>Mon:3:00-7:00</p>
+                    <p>Tues:3:00-7:00</p>
+                    <p>Weds:3:00-7:00</p>
+                    <p>Thurs:3:00-7:00</p>
+                    <p>Fri:3:00-7:00</p>
+                    <p>Sat-Sun:3:00-7:00</p>
+                </div>
+                <div class = 'cont-hours'>
+                  <p>News</p>
+                    <p>Here are the news!</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class ="jumbo_bottom d-flex justify-content-center  align-items-center">
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="1000">
+                    <img src="../../static/images/building/Exterior.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/calamari.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/general-tso-chicken.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/honey-glazed-chicken.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/meegoreng.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/lemon-pepper-chicken.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/red-snapper.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/roast-duck.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="1000">
+                    <img src="../../static/images/food/bbq-wings-shrimp-fried-rice.jpg" class="d-block w-100 h-100" alt="...">
+                </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+    </div>
+</div>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'luckydragon_app/base.html' %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Update</button>
+    </form>
+    <p>Please logout!</p>
+    <a href="{% url 'logout' %} ">Logout</a>
+{% endblock %}

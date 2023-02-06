@@ -1,0 +1,10 @@
+{% extends 'luckydragon_app/base.html' %}
+
+{% block title %}
+    <title>Login</title>
+{% endblock %}
+
+{% block content %}
+    <h1> Logged out! :) </h1>
+    <a href="{% url 'login'%}">Click here to login again.</a>
+{% endblock %}

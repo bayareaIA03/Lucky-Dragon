@@ -1,0 +1,188 @@
+{% extends 'luckydragon_app/base.html' %}
+
+{% load static %}
+{% block extraheader %}
+    <link rel = "stylesheet"  type="text/css" href = "{% static 'css/dish_display.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>Menu</title>
+{% endblock %}
+
+{% block content %}
+
+    {% if dish_display.food_image %}
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col">
+                    {% if dish_display.food_spicy %}
+                        <h3>{{ dish_display.food_category }} : {{ dish_display.food_name}} <i class="fas fa-pepper-hot"></i></h3>
+                    {% else %}
+                        <h3>{{ dish_display.food_category }} : {{ dish_display.food_name}}</h3>
+                    {% endif %}
+                    <p>Price: ${{ dish_display.food_price }}</p>
+                    {% load static %} <img src="{% static 'images/food/' %}{{dish_display.food_image}}.jpg" width="550px" height="500px" alt="">
+                    {% if dish_display.food_description %}
+                        <p class="mt-3">Description: {{ dish_display.food_description }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="col">
+                    <form method="POST", id="menu">
+                        {% csrf_token %}
+                        {% for opt_str, options in options_dict.items %}
+                            <h4 class="mt-2">{{ opt_str }}:</h4>
+                            {% for item, choices in options.items  %}
+                                {% for string, array in one_option.items %}
+                                    <!-- Only one option applies -->
+                                    {% if item in array %}
+                                        {% for choice, price in choices.items %}
+                                            {% if price == 0 %}
+                                                {% if choice == 'Chicken' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif '(Dinner Sp.)' in dish_display.food_name and choice == 'Fried Rice' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif '(Lunch)' in dish_display.food_name and choice == 'Fried Rice' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif choice == 'White Rice' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif 'Soup' in dish_display.food_name and 'Small' in choice %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif 'Wings' in dish_display.food_name and choice == '8pc' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif 'Wings' in dish_display.food_name and choice == 'Fried' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif choice == 'Pan Fried' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif choice == 'Salad' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% elif choice == 'Miso soup' %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                                {% else %}
+                                                    <input type="radio" name="{{ item }}" value="{{ choice }}"> {{ choice }}<br>
+                                                {% endif %}
+                                            {% else %}
+                                                <input type="radio" name="{{ item }}" value="{{ choice }}"> {{ choice }} : +${{ price }}<br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    <!-- Multiple options -->   
+                                    {% else %}
+                                        {% for choice, price in choices.items %}
+                                            {% if price == 0 %}
+                                                <input type="checkbox" name="{{ item }}" value="{{ choice }}"> {{ choice }}<br>
+                                            {% else %}
+                                                <input type="checkbox" name="{{ item }}" value="{{ choice }}"> {{ choice }} : +${{ price }}<br>
+                                            {% endif %}   
+                                        {% endfor %}
+                                    {% endif %}                          
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                        <div class="form-group mb-4 mt-2">
+                            <h4><label for="exampleFormControlTextarea1">Special instruction</label></h4>
+                            <textarea class="form-control" name="special-instruction" id="special-instruction" rows="3"></textarea>
+                        </div>
+                        <!-- <h4>
+                            Quantity:
+                            <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4" pattern="" inputmode=""><br><br>
+                        </h4> -->
+                        <label for='quantity'><b>Quantity:</b></label>
+                        <select name="quantity" title="Qty" class="form-select" id="quantity-size">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-success" name="add" value={{dish_display.food_id}}>Add to cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <!-- No food_image provided -->  
+    {% else %}
+        <div class="container mt-5">
+            {% if dish_display.food_spicy %}
+                <h3>{{ dish_display.food_category }} : {{ dish_display.food_name}} <i class="fas fa-pepper-hot"></i></h3>
+            {% else %}
+                <h3>{{ dish_display.food_category }} : {{ dish_display.food_name}}</h3>
+            {% endif %}
+            <p>Price: {{ dish_display.food_price }}</p>
+            {% if dish_display.food_description %}
+                <p class="mt-3">Description: {{ dish_display.food_description }}</p>
+            {% endif %}
+            <form method="POST", id="menu">
+                {% csrf_token %}
+                {% for opt_str, options in options_dict.items %}
+                    <h4 class="mt-2">{{ opt_str }}:</h4>
+                    {% for item, choices in options.items  %}
+                        {% for string, array in one_option.items %}
+                            <!-- Only one option applies -->
+                            {% if item in array %}
+                                {% for choice, price in choices.items %}
+                                    {% if price == 0 %}
+                                        {% if choice == 'Chicken' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif '(Dinner Sp.)' in dish_display.food_name and choice == 'Fried Rice' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif '(Lunch)' in dish_display.food_name and choice == 'Fried Rice' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif choice == 'White Rice' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif 'Soup' in dish_display.food_name and 'Small' in choice %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif 'Wings' in dish_display.food_name and choice == '8pc' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif 'Wings' in dish_display.food_name and choice == 'Fried' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif choice == 'Pan Fried' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif choice == 'Salad' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif choice == 'Miso soup' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% elif choice == 'Coke' %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}" checked> {{ choice }}<br>
+                                        {% else %}
+                                            <input type="radio" name="{{ item }}" value="{{ choice }}"> {{ choice }}<br>
+                                        {% endif %}
+                                    {% else %}
+                                        <input type="radio" name="{{ item }}" value="{{ choice }}"> {{ choice }} : +${{ price }}<br>
+                                    {% endif %}
+                                {% endfor %}
+                            <!-- Multiple options -->   
+                            {% else %}
+                                {% for choice, price in choices.items %}
+                                    {% if price == 0 %}
+                                        <input type="checkbox" name="{{ item }}" value="{{ choice }}"> {{ choice }}<br>
+                                    {% else %}
+                                        <input type="checkbox" name="{{ item }}" value="{{ choice }}"> {{ choice }} : +${{ price }}<br>
+                                    {% endif %}   
+                                {% endfor %}
+                            {% endif %}                          
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+
+                <div class="form-group mb-4 mt-2">
+                    <h4><label for="exampleFormControlTextarea1">Special instruction</label></h4>
+                    <textarea class="form-control" name="special-instruction" id="special-instruction" rows="3"></textarea>
+                </div>
+                <label for='quantity'><b>Quantity:</b></label>
+                <!-- <input type="number" step="1" min="1" max="" name="quantity" value="1"  size="4" pattern="" inputmode=""><br><br> -->
+                <select name="quantity" title="Qty" class="form-select" id="quantity-size">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <br>
+                <button type="submit" class="btn btn-success" name="add" value={{dish_display.food_id}}>Add to cart</button>
+            </form>
+        </div>
+    {% endif %} 
+{% endblock %}

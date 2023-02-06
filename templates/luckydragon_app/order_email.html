@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+      p {
+        padding: 0;
+        margin: 0;
+        line-height: 16px;
+        font-size: 16px;
+      }
+
+      table { 
+        width: 50%;
+        height: 50%;
+        text-align: left;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <p><strong>Order ID:</strong> {{order_id}} </p>
+    <p><strong>Date:</strong> {{time}} </p>
+    <p><strong>Order type:</strong> {{order_type}} </p>
+    <br>
+    <p><strong>Customer Information:</strong> </p>
+    <p><strong>Name:</strong> {{name}} </p>
+    <p><strong>Phone number:</strong> {{phone_number}} </p>
+    <p><strong>Email:</strong> {{email}} </p>
+    <br>
+    {% if street_number and street and city and zipcode %}
+      <p><strong>Address:</strong> 
+      <p>{{street_number}} {{street}}</p>
+      <p>{{city}} GA, {{zipcode}}</p>
+    {% endif %}
+    <br>
+    {% if delivery_instructions %}
+    <p> Delivery Instructions: {{ delivery_instructions }} </p>
+    {% endif %}
+    <br>
+    <table>
+      <tr>
+        <th> QTY </th>
+        <th> Item </th>
+        <th> Unit Price </th>
+        <th> Total </th>
+      </tr>
+      {% for quantity, food_name, unit_price, subtotal, special_instructions, options in order_items %}
+        <tr>
+          <td> {{quantity}} </td>
+          <td> {{food_name}} </td>
+          <td> {{unit_price}} </td>
+          <td> {{subtotal}} </td>
+        </tr>
+        {% if special_instructions or options %}
+          {% for option in options.items %}
+            <tr>
+            <td> </td> 
+            <td> {{option.0}}: + ${{option.1}} </td> 
+            </tr>
+          {% endfor %} 
+          <tr>
+          <td></td>
+          {% if special_instructions %} 
+            <td> Special Instructions: {% firstof special_instructions %} </td>
+          {% endif %} 
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </table>
+    <br>
+    <p><strong>Subtotal:</strong> {{ subtotal }} </p>
+    {% if delivery_fee %}
+      <p><strong>Delivery Fee:</strong> {{ delivery_fee }} </p>
+    {% endif %}
+    <p><strong>Tax:</strong> {{tax}} </p>
+    <p><strong>Tip:</strong> {{ tip }} </p>
+    <br>
+    <p><strong>Total:</strong> {{total}} </p>
+    <p><strong>Payment type:</strong> {{payment_type}} </p>
+  </body>
+</html>
