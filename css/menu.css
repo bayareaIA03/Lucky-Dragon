@@ -1,0 +1,19 @@
+.category-space::before {
+  display: block;
+  content: "";
+  margin-top: -65px;
+  height: 65px;
+}
+.row .items {
+  display: flex;
+}
+.row > .bord {
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+}
