@@ -1,0 +1,113 @@
+.about-hero {
+  display: flex;
+  width: 95vw;
+  height: auto;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+.about-header {
+  position: relative;
+  text-align: left;
+}
+.hero-image {
+  height: auto;
+  width: 100%;
+}
+.about-info {
+  display: flex;
+  width: auto;
+  height: auto;
+  flex-direction: column;
+  background-color: rgba(222, 41, 16, 0.6);
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-evenly;
+}
+.about-Describe {
+  width: 35vw;
+  font-family: "Montserrat", Helvetica, Arial, Lucida, sans-serif;
+  height: fit-content;
+  text-align: left;
+  margin-top: 2vw;
+  margin-left: 2vw;
+  margin-bottom: 2vw;
+  font-size: 15px;
+  background-color: rgba(255, 222, 0, 0.6);
+  padding: 20px;
+}
+
+.about-Hour {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid #cdcdcd;
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 222, 0, 0.6);
+  font-size: 15px;
+  padding: 10px;
+  flex-direction: column;
+  margin-bottom: 2vw;
+}
+
+.about-delivery {
+  width: fit-content;
+  height: fit-content;
+  background-color: rgba(255, 222, 0, 0.6);
+  font-size: 15px;
+  position: relative;
+  padding: 10px;
+}
+
+.about-time {
+  width: 35.5vw;
+  height: fit-content;
+  background-color: rgba(255, 222, 0, 0.6);
+  font-size: 15px;
+  margin-top: 10px;
+  padding: 10px;
+  position: relative;
+}
+
+.about-address {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  flex-direction: row;
+}
+#map {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  width: 100%;
+  height: 50%;
+}
+.about-time {
+  margin-bottom: 5px;
+}
+.about-payments {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 10px;
+}
+.about-address {
+  font-size: 15px;
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(222, 41, 16, 0.6);
+}
+
+.location {
+  background-color: rgba(255, 222, 0, 0.6);
+}
